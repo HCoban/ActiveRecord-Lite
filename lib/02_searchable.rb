@@ -3,23 +3,23 @@ require_relative '01_sql_object'
 
 module Searchable
   def where(params)
-    ar = []
-    v = []
-    params.each do |key, value|
-      ar << "#{key} = ?"
-      v << value
+    where_line = []
+    params.each do |key, _|
+      where_line << "#{key} = ?"
     end
-    ar = ar.join(" AND ")
-    results = DBConnection.execute(<<-SQL, *v)
+    where_line = where_line.join(" AND ")
+
+    results = DBConnection.execute(<<-SQL, *params.values)
       SELECT
         *
       FROM
         #{self.table_name}
       WHERE
-        #{ar}
+        #{where_line}
     SQL
-    return nil if results.empty?
-    self.new(results.first)
+    return [] if results.empty?
+    found = []
+    results.map { |hash| self.new(hash) }
   end
 end
 
