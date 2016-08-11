@@ -60,6 +60,9 @@ module Associatable
         .where(options.primary_key => send(options.foreign_key))
         .first
     end
+
+    self.assoc_options[name] = options
+    # debugger
   end
 
   def has_many(name, options = {})
@@ -71,7 +74,7 @@ module Associatable
   end
 
   def assoc_options
-    # Wait to implement this in Phase IVa. Modify `belongs_to`, too.
+    @assoc_options ||= Hash.new
   end
 end
 

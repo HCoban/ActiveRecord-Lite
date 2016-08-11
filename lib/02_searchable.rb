@@ -18,7 +18,6 @@ module Searchable
         #{where_line}
     SQL
     return [] if results.empty?
-    found = []
     results.map { |hash| self.new(hash) }
   end
 end
