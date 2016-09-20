@@ -1,4 +1,4 @@
-require '01_sql_object'
+require 'sql_object'
 require 'db_connection'
 require 'securerandom'
 
@@ -120,9 +120,6 @@ describe SQLObject do
 
     describe '#initialize' do
       it 'calls appropriate setter method for each item in params' do
-        # We have to set method expectations on the cat object *before*
-        # #initialize gets called, so we use ::allocate to create a
-        # blank Cat object first and then call #initialize manually.
         c = Cat.allocate
 
         expect(c).to receive(:name=).with('Don Frye')
